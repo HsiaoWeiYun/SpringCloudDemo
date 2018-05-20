@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: CalService
+
+server:
+  port: 9092
+
+eureka:
+  client:
+    register-with-eureka: true   #向註冊中心註冊自己
+    fetch-registry: true   #需要檢索服務
+    service-url:
+      defaultZone: http://peer1:9090/eureka,http://peer2:9091/eureka
