@@ -6,6 +6,9 @@ server:
   port: 9092
 
 eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 5   #每隔多久向eureka續約服務
+    lease-expiration-duration-in-seconds: 10   #多久後沒續約就過期
   client:
     register-with-eureka: true   #向註冊中心註冊自己
     fetch-registry: true   #需要檢索服務
