@@ -1,0 +1,10 @@
+server:
+  port: 9091
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false   #不向註冊中心註冊自己
+    fetch-registry: false   #不需要檢索服務
+    service-url:
+      defaultZone: http://peer1:9090/eureka

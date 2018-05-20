@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  eureka1:
+    build:
+      context: ./
+      dockerfile: EurekaDemo/Dockerfile
+    image: eureka:1.0
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "peer2:192.168.99.100"
+    ports:
+      - "9090:9090"
+    command: java -jar eureka-demo-1.0-SNAPSHOT.jar --spring.profiles.active=peer1
+
+  eureka2:
+    build:
+      context: ./
+      dockerfile: EurekaDemo/Dockerfile
+    image: eureka:1.0
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "peer1:192.168.99.100"
+    ports:
+      - "9091:9091"
+    command: java -jar eureka-demo-1.0-SNAPSHOT.jar --spring.profiles.active=peer2
