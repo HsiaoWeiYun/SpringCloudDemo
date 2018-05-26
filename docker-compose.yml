@@ -42,7 +42,7 @@ services:
     depends_on:
       - eureka1
       - eureka2
-    command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9092
+    command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9092 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
 
   calservice2:
       build:
@@ -59,4 +59,20 @@ services:
       depends_on:
         - eureka1
         - eureka2
-      command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9093
+      command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9093 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
+
+  consumer:
+      build:
+        context: ./
+        dockerfile: ConsumerService/Dockerfile
+      image: consumerservice:1.0
+      stdin_open: true
+      tty: true
+      extra_hosts:
+        - "peer1:192.168.99.100"
+        - "peer2:192.168.99.100"
+      ports:
+        - "9094:9094"
+      depends_on:
+        - calservice1
+      command: java -jar consumer-1.0-SNAPSHOT.jar --server.port=9094 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100

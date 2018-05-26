@@ -11,6 +11,7 @@
     <modules>
         <module>../EurekaDemo</module>
         <module>../CalService</module>
+        <module>../ConsumerService</module>
     </modules>
 
     <parent>

@@ -1,16 +1,15 @@
 spring:
   application:
-    name: CalService
+    name: ConsumerService
 
 server:
-  port: 9092
+  port: 9094
 
 eureka:
   instance:
-    instance-id: calService:${spring.application.instance-id:${random.value}}
-    preferIpAddress: true
     lease-renewal-interval-in-seconds: 5   #每隔多久向eureka續約服務
     lease-expiration-duration-in-seconds: 10   #多久後沒續約就過期
+    instance-id: consumerService:${spring.application.instance-id:${random.value}}
   client:
     register-with-eureka: true   #向註冊中心註冊自己
     fetch-registry: true   #需要檢索服務
