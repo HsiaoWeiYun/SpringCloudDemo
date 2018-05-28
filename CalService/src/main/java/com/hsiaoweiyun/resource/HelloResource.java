@@ -1,6 +1,7 @@
 package com.hsiaoweiyun.resource;
 
 import com.hsiaoweiyun.vo.InstancesVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -18,8 +19,13 @@ public class HelloResource {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<InstancesVo> index(){
+    @RequestMapping(value = "/index", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public String index(){
+        return System.getProperty("custom.service.name");
+    }
+
+    @RequestMapping(value = "/getInstances", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<InstancesVo> getInstances(){
         List<InstancesVo> instancesVoList = new ArrayList<>();
         List<String> serviceList = discoveryClient.getServices();
         for(String s : serviceList){

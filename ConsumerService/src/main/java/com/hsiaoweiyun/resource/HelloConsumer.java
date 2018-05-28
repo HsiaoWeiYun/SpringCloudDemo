@@ -12,9 +12,15 @@ public class HelloConsumer {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String helloConsumer(){
-        return restTemplate.getForEntity("http://CalService/add?num1=10&num2=10", String.class).getBody();
+        return restTemplate.getForEntity("http://CalService/add?num1={1}&num2={2}", String.class, 10, 20).getBody();
+    }
+    @RequestMapping(value = "/getServiceName", method = RequestMethod.GET)
+    public String getServiceName(){
+        String s = restTemplate.getForEntity("http://CalService/index", String.class).getBody();
+        System.out.println("s: " + s);
+        return s;
     }
 
 }

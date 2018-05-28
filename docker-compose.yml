@@ -42,7 +42,7 @@ services:
     depends_on:
       - eureka1
       - eureka2
-    command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9092 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
+    command: java -Dcustom.service.name="CalService1" -jar cal-service-1.0-SNAPSHOT.jar --server.port=9092 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
 
   calservice2:
       build:
@@ -59,7 +59,7 @@ services:
       depends_on:
         - eureka1
         - eureka2
-      command: java -jar cal-service-1.0-SNAPSHOT.jar --server.port=9093 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
+      command: java -Dcustom.service.name="CalService2" -jar cal-service-1.0-SNAPSHOT.jar --server.port=9093 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
 
   consumer:
       build:
