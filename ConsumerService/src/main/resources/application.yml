@@ -1,6 +1,10 @@
 spring:
   application:
     name: ConsumerService
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true   #enable retry
 
 server:
   port: 9094
@@ -16,6 +20,21 @@ eureka:
     fetch-registry: true   #需要檢索服務
     service-url:
       defaultZone: http://peer1:9090/eureka,http://peer2:9091/eureka
+
+ribbon:
+  MaxAutoRetries: 1  #單台server最多retry次數
+  MaxAutoRetriesNextServer: 2  #切換server最多次數
+  OkToRetryOnAllOperations: true
+  ServerListRefreshInterval: 2000   # Interval to refresh the server list from the source
+  ReadTimeout: 2000
+  ConnectTimeout: 2000
+
+niws:
+    loadbalancer:
+        availabilityFilteringRule:
+            activeConnectionsLimit: 10   #for availabilityFilteringRule最大server併發數
+
+#有空嘗試Spring cloud 3.5 Ignore Network Interfaces的內容
 
 management:
   security:
