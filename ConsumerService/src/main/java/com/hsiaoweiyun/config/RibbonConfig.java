@@ -35,7 +35,14 @@ public class RibbonConfig {
 
         //輪詢方式選擇server, 若選擇的server未滿足條件則輪詢下個server, 否則直接使用.
         //條件為檢查server併發數 (niws.loadbalancer.availabilityFilteringRule.ActiveConnectionsLimit)
+        //以及過濾掉服務斷路器是否為開路狀態的server
         return new AvailabilityFilteringRule();
+    }
+
+    @Bean
+    public IPing iPing(){
+        //spring 默認採用NoOpPing, 實際上並沒有ping server而是直接返回true
+        return new PingUrl();
     }
 
 }
