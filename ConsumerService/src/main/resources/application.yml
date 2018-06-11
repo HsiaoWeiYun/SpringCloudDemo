@@ -34,6 +34,16 @@ niws:
         availabilityFilteringRule:
             activeConnectionsLimit: 10   #for availabilityFilteringRule最大server併發數
 
+hystrix:
+    command:
+        default:
+            execution:
+                timeout:
+                    enabled: true
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 3000
+
 #有空嘗試Spring cloud 3.5 Ignore Network Interfaces的內容
 
 management:

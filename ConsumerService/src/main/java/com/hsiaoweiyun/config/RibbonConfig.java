@@ -19,7 +19,7 @@ public class RibbonConfig {
     @Bean
     public IRule iRule(){
         //輪詢, 嘗試10次選擇不到server則報警告
-        //return new RoundRobinRule();
+        return new RoundRobinRule();
 
         //隨機存取
         //return new RandomRule();
@@ -36,10 +36,10 @@ public class RibbonConfig {
         //輪詢方式選擇server, 若選擇的server未滿足條件則輪詢下個server, 否則直接使用.
         //條件為檢查server併發數 (niws.loadbalancer.availabilityFilteringRule.ActiveConnectionsLimit)
         //以及過濾掉服務斷路器是否為開路狀態的server
-        return new AvailabilityFilteringRule();
+        //return new AvailabilityFilteringRule();
     }
 
-    @Bean
+    //@Bean   暫時有問題, 先拿掉, 有空研究
     public IPing iPing(){
         //spring 默認採用NoOpPing, 實際上並沒有ping server而是直接返回true
         return new PingUrl();
