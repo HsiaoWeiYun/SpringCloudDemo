@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan("com.hsiaoweiyun.resource")
+@ComponentScan({"com.hsiaoweiyun.resource", "com.hsiaoweiyun.config"})
 public class CalServiceApp {
     public static void main(String[] args) {
         SpringApplication.run(CalServiceApp.class, args);
