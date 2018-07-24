@@ -20,3 +20,11 @@ eureka:
 management:
   security:
     enabled: false   #因為還沒加入spring Security, 否則出現 s.b.a.e.m.MvcEndpointSecurityInterceptor : Full authentication is required to access actuator endpoints. Consider adding Spring Security or set 'management.security.enabled' to false.
+
+redis:
+  host: 192.168.99.100
+  port: 6379
+  pool:
+    maxTotal: 10
+    maxIdle: 5
+    minIdle: 2

@@ -1,7 +1,11 @@
 package com.hsiaoweiyun.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -11,20 +15,24 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class RedisConfig {
 
+    @Autowired
+    private RedisProperties redisProperties;
+
+
     private JedisPoolConfig createJedisPoolConfig() {
         //TODO 注入設定
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(10);
-        jedisPoolConfig.setMaxIdle(5);
-        jedisPoolConfig.setMinIdle(2);
+        jedisPoolConfig.setMaxTotal(redisProperties.getPool().getMaxTotal());
+        jedisPoolConfig.setMaxIdle(redisProperties.getPool().getMaxIdle());
+        jedisPoolConfig.setMinIdle(redisProperties.getPool().getMinIdle());
         return jedisPoolConfig;
     }
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName("192.168.99.100");
-        jedisConnectionFactory.setPort(6379);
+        jedisConnectionFactory.setHostName(redisProperties.getHost());
+        jedisConnectionFactory.setPort(redisProperties.getPort());
         jedisConnectionFactory.setPoolConfig(createJedisPoolConfig());
         return jedisConnectionFactory;
     }
