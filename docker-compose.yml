@@ -76,3 +76,7 @@ services:
       depends_on:
         - calservice1
       command: java -jar consumer-1.0-SNAPSHOT.jar --server.port=9094 --eureka.instance.ipAddress=192.168.99.100 --eureka.instance.hostname=192.168.99.100
+networks:
+  default:
+    external:
+      name: spring-cloud-demo

@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+  redis-master-1:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: redis-demo:latest
+    stdin_open: true
+    tty: true
+    container_name: redis-master-1
+    volumes:
+      - /c/Users/admin/docker/mount/redis/set1/master:/usr/local/etc/redis
+    ports:
+      - "6379:6379"
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  redis-slave-1:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: redis-demo:latest
+    stdin_open: true
+    tty: true
+    container_name: redis-slave-1
+    volumes:
+      - /c/Users/admin/docker/mount/redis/set1/slave-1:/usr/local/etc/redis
+    ports:
+      - "6380:6379"
+    links:
+      - redis-master-1
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  redis-slave-1-1:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: redis-demo:latest
+    stdin_open: true
+    tty: true
+    container_name: redis-slave-1-1
+    volumes:
+      - /c/Users/admin/docker/mount/redis/set1/slave-1:/usr/local/etc/redis
+    ports:
+      - "6381:6379"
+    links:
+      - redis-slave-1
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  redis-sentinel-1:
+    build:
+      context: ./
+      dockerfile: ./redis-sentinel-dockerfile
+    image: redis-sentinel-demo:latest
+    ports:
+      - "26379:26379"
+    links:
+      - redis-master-1
+    depends_on:
+      - redis-slave-1-1
+    container_name: redis-sentinel-1
+    command: redis-server /redis/sentinel.conf --sentinel
+
+  redis-sentinel-2:
+    build:
+      context: ./
+      dockerfile: ./redis-sentinel-dockerfile
+    image: redis-sentinel-demo:latest
+    ports:
+      - "26380:26379"
+    links:
+      - redis-master-1
+    depends_on:
+      - redis-sentinel-1
+    container_name: redis-sentinel-2
+    command: redis-server /redis/sentinel.conf --sentinel
+
+  redis-sentinel-3:
+    build:
+      context: ./
+      dockerfile: ./redis-sentinel-dockerfile
+    image: redis-sentinel-demo:latest
+    ports:
+      - "26381:26379"
+    links:
+      - redis-master-1
+    depends_on:
+      - redis-sentinel-1
+    container_name: redis-sentinel-3
+    command: redis-server /redis/sentinel.conf --sentinel
+
+networks:
+  default:
+    external:
+      name: spring-cloud-demo

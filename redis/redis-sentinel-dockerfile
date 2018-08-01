@@ -1,0 +1,10 @@
+FROM redis:latest
+RUN mkdir -p /redis
+RUN mkdir -p /tmp
+WORKDIR /redis
+COPY sentinel.conf .
+COPY sentinel-entrypoint.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/sentinel-entrypoint.sh
+
+EXPOSE 26379
