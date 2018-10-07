@@ -19,7 +19,7 @@ eureka:
     register-with-eureka: true   #向註冊中心註冊自己
     fetch-registry: true   #需要檢索服務
     service-url:
-      defaultZone: http://192.168.99.100:9090/eureka,http://192.168.99.100:9091/eureka
+      defaultZone: http://peer1:9090/eureka,http://peer2:9091/eureka
 
 ribbon:
   MaxAutoRetries: 1  #單台server最多retry次數
